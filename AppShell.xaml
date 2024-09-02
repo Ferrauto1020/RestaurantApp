@@ -25,6 +25,10 @@
         Icon="grid.png"
         Route="ManageMenuItemPage"/>
     <Shell.FlyoutFooter>
-<Image Source="help" HeightRequest="20" WidthRequest="20" Margin="0,0,0,25"/>
+        <Image Source="help.png"
+                HeightRequest="20"
+                WidthRequest="20"
+                HorizontalOptions="Center"
+                Margin="0,0,0,25"/>
     </Shell.FlyoutFooter>
 </Shell>

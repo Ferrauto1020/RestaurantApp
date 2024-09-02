@@ -1,8 +1,8 @@
 using SQLite;
 
-namespace  RestaurantApp.Data
+namespace RestaurantApp.Data
 {
-        public class MenuCategory
+    public class MenuCategory
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
