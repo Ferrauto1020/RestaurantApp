@@ -3,13 +3,28 @@
     x:Class="RestaurantApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:RestaurantApp"
-    Shell.FlyoutBehavior="Disabled"
+    xmlns:pages="clr-namespace:RestaurantApp.Pages"
+    Shell.FlyoutBehavior="Locked"
+    Shell.FlyoutBackgroundColor="Wheat"
+    Shell.FlyoutWidth="60"
     Title="RestaurantApp">
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+        Icon="home.png"
+        ContentTemplate="{DataTemplate pages:MainPage}"
+        Route="MainPage"/>
+    <ShellContent
+        Title="Orders"
+        ContentTemplate="{DataTemplate pages:OrdersPage}"
+        Icon="list.png"
+        Route="OrdersPage"/>
+    <ShellContent
+        Title="Manage Menu"
+        ContentTemplate="{DataTemplate pages:ManageMenuItemPage}"
+        Icon="grid.png"
+        Route="ManageMenuItemPage"/>
+    <Shell.FlyoutFooter>
+<Image Source="help" HeightRequest="20" WidthRequest="20" Margin="0,0,0,25"/>
+    </Shell.FlyoutFooter>
 </Shell>
