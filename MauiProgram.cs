@@ -2,6 +2,8 @@
 using CommunityToolkit.Maui.Core;
 using Microsoft.Extensions.Logging;
 using RestaurantApp.Data;
+using RestaurantApp.Pages;
+using RestaurantApp.ViewModels;
 
 namespace RestaurantApp;
 
@@ -26,6 +28,8 @@ public static class MauiProgram
 #endif
 
 		builder.Services.AddSingleton<DatabaseService>();
+		builder.Services.AddSingleton<HomeViewModel>();
+		builder.Services.AddSingleton<MainPage>();
 		return builder.Build();
 		
 	}

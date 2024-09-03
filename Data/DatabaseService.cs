@@ -14,7 +14,7 @@ namespace RestaurantApp.Data
 
         public async Task InitializeDatabaseAsync()
         {
-            await _connection.CreateTableAsync<MenuCategory>();
+            await _connection.CreateTableAsync<MenuCategory>(); 
             await _connection.CreateTableAsync<MenuItem>();
             await _connection.CreateTableAsync<MenuItemCategoryMapping>();
             await _connection.CreateTableAsync<Order>();
@@ -38,7 +38,11 @@ namespace RestaurantApp.Data
             await _connection.InsertAllAsync(mappings);
         }
 
-        public async Task<MenuCategory[]> GetMenuCategoriesAsync() => await _connection.Table<MenuCategory>().ToArrayAsync();
+        public async Task<MenuCategory[]> GetMenuCategoriesAsync()
+        {
+            return await _connection.Table<MenuCategory>().ToArrayAsync();
+        }
+
         public async Task<MenuItem[]> GetMenuItemsByCategoryAsync(int categoryId)
         {
             var query= @"

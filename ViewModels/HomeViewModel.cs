@@ -9,21 +9,21 @@ namespace RestaurantApp.ViewModels
         [ObservableProperty]
         public MenuCategory[] _categories;
         [ObservableProperty]
-        private bool _isLoading;
+        private bool _isLoaded;
 
         public HomeViewModel(DatabaseService databaseService)
         {
             _databaseService = databaseService;
         }
-        private bool _isInitialized;
+        private bool _isStarted;
         public async ValueTask InitializeAsync()
         {
-            if (_isInitialized)
+            if (_isStarted)
             { return; }
-            _isInitialized = true;
-            IsLoading = true;
+            _isStarted = true;
+            IsLoaded = true;
             Categories = await _databaseService.GetMenuCategoriesAsync();
-            IsLoading = false;
+            IsLoaded = false;
         }
     }
 }
