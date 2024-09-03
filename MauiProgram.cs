@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Core;
 using Microsoft.Extensions.Logging;
+using RestaurantApp.Data;
 
 namespace RestaurantApp;
 
@@ -24,6 +25,8 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
+		builder.Services.AddSingleton<DatabaseService>();
 		return builder.Build();
+		
 	}
 }

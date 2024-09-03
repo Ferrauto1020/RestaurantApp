@@ -2,10 +2,10 @@ using SQLite;
 
 namespace RestaurantApp.Data
 {
-    public class DatabaseHelper : IAsyncDisposable
+    public class DatabaseService : IAsyncDisposable
     {
         private readonly SQLiteAsyncConnection _connection;
-        public DatabaseHelper()
+        public DatabaseService()
         {
             var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "restaurant");
             _connection = new SQLiteAsyncConnection(dbPath, SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.SharedCache);
@@ -19,11 +19,13 @@ namespace RestaurantApp.Data
             await _connection.CreateTableAsync<MenuItemCategoryMapping>();
             await _connection.CreateTableAsync<Order>();
             await _connection.CreateTableAsync<OrderItem>();
+
+            await SeedDataAsync();
         }
-        public async Task SeedDataAsync()
+        private async Task SeedDataAsync()
         {
             var firstCategory = await _connection.Table<MenuCategory>().FirstOrDefaultAsync();
-            if(firstCategory!=null)
+            if (firstCategory != null)
             {
                 return; //db already seeded
             }
@@ -34,6 +36,20 @@ namespace RestaurantApp.Data
             await _connection.InsertAllAsync(categories);
             await _connection.InsertAllAsync(menuItems);
             await _connection.InsertAllAsync(mappings);
+        }
+
+        public async Task<MenuCategory[]> GetMenusAsync() => await _connection.Table<MenuCategory>().ToArrayAsync();
+        public async Task<MenuItem[]> GetMenuItemsByCategoryAsync(int categoryId)
+        {
+            var query= @"
+            SELECT menu.*
+            FROM MenuItem AS menu
+            INNER JOIN MenuItemCategoryMapping AS mapping 
+            ON menu.Id = mapping.MenuItemId
+            WHERE mapping.MenuCategoryId = ?
+            ";
+            var menuItems = await _connection.QueryAsync<MenuItem>(query,categoryId);
+            return [..menuItems];
         }
         public async ValueTask DisposeAsync()
         {
