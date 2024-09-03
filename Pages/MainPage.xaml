@@ -1,19 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:data="clr-namespace:RestaurantApp.Data"
+             xmlns:vm="clr-namespace:RestaurantApp.ViewModels"
              x:Class="RestaurantApp.Pages.MainPage"
              Shell.NavBarIsVisible="False"
-             >
+             x:DataType="vm:HomeViewModel">
 
     <Grid ColumnDefinitions=".75*,.25*">
         <Grid Grid.Column="0"
-              RowDefinitions="Auto,Auto,*">
-              <Label Grid.Row="0" Text="Hello"/>
-              <Label Grid.Row="1" Text="Categories List"/>
-              <Label Grid.Row="2" Text="Menu Items List"/>
+              RowDefinitions="Auto,Auto,*"
+                RowSpacing="10">
+            <Label Grid.Row="0"
+                   Text="Hello"/>
+            <CollectionView Grid.Row="1"
+                    ItemsSource="{Binding Categories}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal"
+                            ItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="data:MenuCategory">
+                        <Border Padding="20,10" BackgroundColor="{StaticResource LightWheat}" StrokeShape="RoundRectangle 10" StrokeThickness="0">
+                            <HorizontalStackLayout Spacing="5">
+                                <Image Source="{Binding Icon}"
+                                        HeightRequest="20"
+                                        WidthRequest="20"
+                                        VerticalOptions="Center"/>
+                                <Label Text="{Binding Name}" TextColor="Maroon" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Label Grid.Row="2"
+                   Text="Menu Items List"/>
         </Grid>
         <Grid Grid.Column="1"
-        BackgroundColor="{StaticResource LightWheat}">
+              BackgroundColor="{StaticResource LightWheat}">
             <Label Text="Current Order Items"/>
         </Grid>
     </Grid>

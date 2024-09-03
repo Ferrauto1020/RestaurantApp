@@ -6325,11 +6325,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\Giuseppe\\lavori maui\\github repo\\RestaurantApp\\RestaurantApp.csproj",
+      "projectUniqueName": "F:\\Giuseppe\\lavori maui\\RestaurantApp\\RestaurantApp.csproj",
       "projectName": "RestaurantApp",
-      "projectPath": "F:\\Giuseppe\\lavori maui\\github repo\\RestaurantApp\\RestaurantApp.csproj",
+      "projectPath": "F:\\Giuseppe\\lavori maui\\RestaurantApp\\RestaurantApp.csproj",
       "packagesPath": "C:\\Users\\giuseppe\\.nuget\\packages\\",
-      "outputPath": "F:\\Giuseppe\\lavori maui\\github repo\\RestaurantApp\\obj\\",
+      "outputPath": "F:\\Giuseppe\\lavori maui\\RestaurantApp\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "configFilePaths": [

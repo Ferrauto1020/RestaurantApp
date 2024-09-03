@@ -1187,3 +1187,4 @@ F:\Giuseppe\lavori maui\github repo\RestaurantApp\bin\Debug\net8.0-windows10.0.1
 F:\Giuseppe\lavori maui\github repo\RestaurantApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Microsoft.Windows.Widgets.winmd
 F:\Giuseppe\lavori maui\github repo\RestaurantApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Microsoft.UI.Xaml.Controls.pri
 F:\Giuseppe\lavori maui\github repo\RestaurantApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Microsoft.IO.RecyclableMemoryStream.dll
+F:\Giuseppe\lavori maui\RestaurantApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Microsoft.IO.RecyclableMemoryStream.dll
