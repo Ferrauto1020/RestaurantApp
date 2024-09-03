@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RestaurantApp.Data;
@@ -14,6 +15,8 @@ namespace RestaurantApp.ViewModels
         private MenuItem[] _menuItems = [];
         [ObservableProperty]
         private MenuCategoryModel? _selectedCategory = null;
+
+        public ObservableCollection<CartModel> CartItems { get; set; } = new();
         [ObservableProperty]
         private bool _isLoading;
 
@@ -49,6 +52,29 @@ namespace RestaurantApp.ViewModels
             SelectedCategory = newSelectedCategory;
             MenuItems = await _databaseService.GetMenuItemsByCategoryAsync(SelectedCategory.Id);
             IsLoading = false;
+        }
+        [RelayCommand]
+        private void AddToCart(MenuItem menuItem)
+        {
+            var cartItem = CartItems.FirstOrDefault(c => c.ItemId == menuItem.Id);
+            if(cartItem==null)
+            {
+                cartItem = new CartModel
+                {
+                    ItemId = menuItem.Id,
+                    Icon = menuItem.Icon,
+                    Name = menuItem.Name,
+                    Price= menuItem.Price,
+                    Quantity = 1
+                };
+                CartItems.Add(cartItem);
+            }
+            else
+            {
+                //item already in cart, increase the quantity
+                cartItem.Quantity++;
+
+            }
         }
     }
 }

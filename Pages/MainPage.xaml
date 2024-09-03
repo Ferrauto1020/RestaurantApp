@@ -4,6 +4,7 @@
              xmlns:data="clr-namespace:RestaurantApp.Data"
              xmlns:vm="clr-namespace:RestaurantApp.ViewModels"
              xmlns:models="clr-namespace:RestaurantApp.Models"
+             xmlns:controls="clr-namespace:RestaurantApp.Controls"
              x:Class="RestaurantApp.Pages.MainPage"
              Shell.NavBarIsVisible="False"
              x:DataType="vm:HomeViewModel">
@@ -11,9 +12,12 @@
     <Grid ColumnDefinitions=".75*,.25*">
         <Grid Grid.Column="0"
               RowDefinitions="Auto,Auto,*"
-              RowSpacing="10">
+              RowSpacing="15"
+              Padding="15">
             <Label Grid.Row="0"
-                   Text="Hello"/>
+                   Text="Hello"
+                   FontSize="22"
+                   FontAttributes="Bold"/>
             <CollectionView Grid.Row="1"
                             ItemsSource="{Binding Categories}">
                 <CollectionView.ItemsLayout>
@@ -81,19 +85,36 @@
                                             HeightRequest="150"
                                             StrokeThickness="0">
                                         <Image Source="{Binding Icon}"
-                                                WidthRequest="250"
-                                                MaximumHeightRequest="150"
-                                                HorizontalOptions="Center"
-                                                VerticalOptions="Center"
-                                                Aspect="Center"/>
+                                               WidthRequest="250"
+                                               MaximumHeightRequest="150"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"
+                                               Aspect="Center"/>
                                     </Border>
-                                    <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="20"/>
-                                    <Label Text="{Binding Description}" FontSize="12" TextColor="Gray"/>
+                                    <Label Text="{Binding Name}"
+                                           FontAttributes="Bold"
+                                           FontSize="20"/>
+                                    <Label Text="{Binding Description}"
+                                           FontSize="12"
+                                           TextColor="Gray"/>
                                     <FlexLayout JustifyContent="SpaceBetween">
-                                        <Label Text="{Binding Price,StringFormat='{0:C}'}" FontSize="25" FontAttributes="Bold" TextColor="Maroon"/>
-                                        <ImageButton Source="shopping.png" BackgroundColor="{StaticResource LightWheat}" CornerRadius="8" HeightRequest="25" WidthRequest="25"/>
+                                        <Label Text="{Binding Price,StringFormat='{0:C}'}"
+                                               FontSize="25"
+                                               FontAttributes="Bold"
+                                               TextColor="Maroon"/>
+                                        <ImageButton Source="shopping.png"
+                                                     BackgroundColor="{StaticResource LightWheat}"
+                                                     CornerRadius="8"
+                                                     HeightRequest="25"
+                                                     WidthRequest="25"
+                                                     Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}},Path=AddToCartCommand}"
+                                                     CommandParameter="{Binding .}"/>
                                     </FlexLayout>
                                 </VerticalStackLayout>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer   Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}},Path=AddToCartCommand}"
+                                                            CommandParameter="{Binding .}"/>
+                                </Border.GestureRecognizers>
                             </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
@@ -113,8 +134,63 @@
             </Grid>
         </Grid>
         <Grid Grid.Column="1"
-              BackgroundColor="{StaticResource LightWheat}">
-            <Label Text="Current Order Items"/>
+              BackgroundColor="{StaticResource LightWheat}"
+              RowDefinitions="Auto,*,Auto"
+              Padding="10">
+            <VerticalStackLayout Grid.Row="0"
+                                 Spacing="5">
+                <Label Text="Current Order"
+                       FontSize="25"
+                       FontAttributes="Bold"/>
+                <controls:CurrentDateTimeControl/>
+            </VerticalStackLayout>
+            <CollectionView Grid.Row="1"
+                            ItemsSource="{Binding CartItems}"
+                            BackgroundColor="Wheat">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
+                                       ItemSpacing="2"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:CartModel">
+                        <Grid>
+                            <Border Padding="5"
+                                    StrokeShape="RoundRectangle 10"
+                                    BackgroundColor="{StaticResource LightWheat}">
+                                <Grid ColumnDefinitions="60, *"
+                                      ColumnSpacing="10">
+                                    <Border Grid.Column="0"
+                                            HeightRequest="60"
+                                            WidthRequest="60"
+                                            BackgroundColor="LightGrey"
+                                            StrokeShape="RoundRectangle 5">
+
+                                        <Image Source="{Binding Icon}"
+                                               HeightRequest="60"
+                                               WidthRequest="60"
+                                               Aspect="AspectFit"/>
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1"
+                                                         Spacing="5">
+                                        <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold"/>
+                                        <Grid ColumnDefinitions="Auto,*">
+                                            <Label Grid.Column="0"
+                                                   Text="{Binding Price,StringFormat='{0:C}'}"
+                                                   FontAttributes="Bold"
+                                                   FontSize="18"
+                                                   TextColor="Maroon"/>
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <VerticalStackLayout Grid.Row="2">
+                <!-- <Subtotal, Tax, amount, buttons/> -->
+            </VerticalStackLayout>
         </Grid>
     </Grid>
 </ContentPage>
