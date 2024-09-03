@@ -36,7 +36,7 @@
                                        VerticalOptions="Center">
                                     <Label.Triggers>
                                         <DataTrigger TargetType="Label"
-                                                Binding="{Binding IsSelected}"
+                                                     Binding="{Binding IsSelected}"
                                                      Value="True">
                                             <Setter Property="TextColor"
                                                     Value="White"/>
@@ -56,15 +56,61 @@
                             <Border.GestureRecognizers>
 
                                 <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}},Path=SelectCategoryCommand}"
-                                CommandParameter="{Binding Id}"
-                                />
+                                                      CommandParameter="{Binding Id}"/>
                             </Border.GestureRecognizers>
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Label Grid.Row="2"
-                   Text="Menu Items List"/>
+
+            <Grid Grid.Row="2">
+                <CollectionView ItemsSource="{Binding MenuItems}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical"
+                                         Span="4"
+                                         HorizontalItemSpacing="10"
+                                         VerticalItemSpacing="10"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="data:MenuItem">
+                            <Border Padding="10"
+                                    StrokeShape="RoundRectangle 10"
+                                    Stroke="#DDD">
+                                <VerticalStackLayout Spacing="10">
+                                    <Border BackgroundColor="{StaticResource LightWheat}"
+                                            HeightRequest="150"
+                                            StrokeThickness="0">
+                                        <Image Source="{Binding Icon}"
+                                                WidthRequest="250"
+                                                MaximumHeightRequest="150"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center"
+                                                Aspect="Center"/>
+                                    </Border>
+                                    <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="20"/>
+                                    <Label Text="{Binding Description}" FontSize="12" TextColor="Gray"/>
+                                    <FlexLayout JustifyContent="SpaceBetween">
+                                        <Label Text="{Binding Price,StringFormat='{0:C}'}" FontSize="25" FontAttributes="Bold" TextColor="Maroon"/>
+                                        <ImageButton Source="shopping.png" BackgroundColor="{StaticResource LightWheat}" CornerRadius="8" HeightRequest="25" WidthRequest="25"/>
+                                    </FlexLayout>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <BoxView IsVisible="{Binding IsLoading}"
+                         HorizontalOptions="Fill"
+                         VerticalOptions="Fill"
+                         Color="{StaticResource LightWheat}"
+                         Opacity="0.5"/>
+                <ActivityIndicator IsRunning="{Binding IsLoading}"
+                                   HeightRequest="25"
+                                   WidthRequest="25"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   Color="Maroon"/>
+            </Grid>
         </Grid>
         <Grid Grid.Column="1"
               BackgroundColor="{StaticResource LightWheat}">
