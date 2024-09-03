@@ -1,5 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using RestaurantApp.Data;
+using RestaurantApp.Models;
 
 namespace RestaurantApp.ViewModels
 {
@@ -7,23 +9,39 @@ namespace RestaurantApp.ViewModels
     {
         private readonly DatabaseService _databaseService;
         [ObservableProperty]
-        public MenuCategory[] _categories;
+        private MenuCategoryModel[] _categories = [];
         [ObservableProperty]
-        private bool _isLoaded;
+        private MenuCategoryModel? _selectedCategory = null;
+        [ObservableProperty]
+        private bool _isLoading;
 
         public HomeViewModel(DatabaseService databaseService)
         {
             _databaseService = databaseService;
         }
-        private bool _isStarted;
+        private bool _isInitialized;
         public async ValueTask InitializeAsync()
         {
-            if (_isStarted)
+            if (_isInitialized)
             { return; }
-            _isStarted = true;
-            IsLoaded = true;
-            Categories = await _databaseService.GetMenuCategoriesAsync();
-            IsLoaded = false;
+            _isInitialized = true;
+            IsLoading = true;
+            Categories = (await _databaseService.GetMenuCategoriesAsync()).Select(MenuCategoryModel.FromEntity).ToArray();
+            Categories[0].IsSelected = true;
+            SelectedCategory = Categories[0];
+            IsLoading = false;
+        }
+
+        [RelayCommand]
+        private void SelectCategory(int categoryId)
+        {
+            if (SelectedCategory.Id == categoryId)
+                return;
+            var existingSelectedCategory = Categories.First(c => c.IsSelected);
+            existingSelectedCategory.IsSelected = false;
+            var newSelectedCategory = Categories.First(c => c.Id == categoryId);
+            newSelectedCategory.IsSelected = true;
+            SelectedCategory = newSelectedCategory;
         }
     }
 }
