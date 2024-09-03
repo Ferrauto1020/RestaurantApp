@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "slnyLaHEYv4=",
+  "dgSpecHash": "oS9NF2N7TvY=",
   "success": true,
-  "projectFilePath": "F:\\Giuseppe\\lavori maui\\RestaurantApp\\RestaurantApp.csproj",
+  "projectFilePath": "F:\\Giuseppe\\lavori maui\\github repo\\RestaurantApp\\RestaurantApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\giuseppe\\.nuget\\packages\\communitytoolkit.maui\\9.0.3\\communitytoolkit.maui.9.0.3.nupkg.sha512",
     "C:\\Users\\giuseppe\\.nuget\\packages\\communitytoolkit.maui.core\\9.0.3\\communitytoolkit.maui.core.9.0.3.nupkg.sha512",
