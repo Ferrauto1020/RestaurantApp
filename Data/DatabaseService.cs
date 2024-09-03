@@ -38,7 +38,7 @@ namespace RestaurantApp.Data
             await _connection.InsertAllAsync(mappings);
         }
 
-        public async Task<MenuCategory[]> GetMenusAsync() => await _connection.Table<MenuCategory>().ToArrayAsync();
+        public async Task<MenuCategory[]> GetMenuCategoriesAsync() => await _connection.Table<MenuCategory>().ToArrayAsync();
         public async Task<MenuItem[]> GetMenuItemsByCategoryAsync(int categoryId)
         {
             var query= @"
