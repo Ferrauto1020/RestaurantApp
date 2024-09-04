@@ -1,3 +1,4 @@
+using RestaurantApp.Models;
 using SQLite;
 
 namespace RestaurantApp.Data
@@ -14,7 +15,7 @@ namespace RestaurantApp.Data
 
         public async Task InitializeDatabaseAsync()
         {
-            await _connection.CreateTableAsync<MenuCategory>(); 
+            await _connection.CreateTableAsync<MenuCategory>();
             await _connection.CreateTableAsync<MenuItem>();
             await _connection.CreateTableAsync<MenuItemCategoryMapping>();
             await _connection.CreateTableAsync<Order>();
@@ -45,15 +46,47 @@ namespace RestaurantApp.Data
 
         public async Task<MenuItem[]> GetMenuItemsByCategoryAsync(int categoryId)
         {
-            var query= @"
+            var query = @"
             SELECT menu.*
             FROM MenuItem AS menu
             INNER JOIN MenuItemCategoryMapping AS mapping 
             ON menu.Id = mapping.MenuItemId
             WHERE mapping.MenuCategoryId = ?
             ";
-            var menuItems = await _connection.QueryAsync<MenuItem>(query,categoryId);
-            return [..menuItems];
+            var menuItems = await _connection.QueryAsync<MenuItem>(query, categoryId);
+            return [.. menuItems];
+        }
+
+        public async Task<string?> PlaceOrderAsync(OrderModel model)
+        {
+            var order = new Order
+            {
+                OrderDate = model.OrderDate,
+                PaymentMode = model.PaymentMode,
+                TotalAmountPaid = model.TotalAmountPaid,
+                TotalItemsCount = model.TotalItemsCount
+
+            };
+            if (await _connection.InsertAsync(order) > 0)
+            {
+                //order inserted
+                foreach (var item in model.Items)
+                {
+                    item.OrderId = order.Id;
+                }
+                if (await _connection.InsertAllAsync(model.Items) == 0)
+                {
+                    //orderItem insert operation failed
+                    await _connection.DeleteAsync(order);
+                    return "Error in inserting order items";
+                }
+            }
+            else
+            {
+                return "error in inserting the order";
+            }
+            model.Id = order.Id;
+            return null;
         }
         public async ValueTask DisposeAsync()
         {

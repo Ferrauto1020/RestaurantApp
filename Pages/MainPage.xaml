@@ -321,20 +321,29 @@
                                     MinimumHeightRequest="25"
                                     MinimumWidthRequest="25"
                                     Command="{Binding ClearCartCommand}"
-                                    ToolTipProperties.Text="Clear the cart"
-                                    />
+                                    ToolTipProperties.Text="Clear the cart"/>
 
                             <Button Grid.Column="2"
                                     Text="Pay Cash"
                                     BackgroundColor="DarkOliveGreen"
                                     MinimumHeightRequest="25"
-                                    MinimumWidthRequest="25"/>
+                                    MinimumWidthRequest="25"
+                                    Command="{Binding PlaceOrderCommand}">
+                                <Button.CommandParameter>
+                                    <x:Boolean>false</x:Boolean>
+                                </Button.CommandParameter>
+                            </Button>
 
                             <Button Grid.Column="3"
                                     Text="Pay Online"
                                     BackgroundColor="DarkOliveGreen"
                                     MinimumHeightRequest="25"
-                                    MinimumWidthRequest="25"/>
+                                    MinimumWidthRequest="25"
+                                    Command="{Binding PlaceOrderCommand}">
+                                <Button.CommandParameter>
+                                    <x:Boolean>true</x:Boolean>
+                                </Button.CommandParameter>
+                            </Button>
                         </Grid>
                     </Grid>
                 </Border>
