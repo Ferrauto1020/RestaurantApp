@@ -116,5 +116,27 @@ namespace RestaurantApp.ViewModels
         {
             Subtotal = CartItems.Sum(c => c.Amount);
         }
+
+        [RelayCommand]
+        private async Task TaxPercentageClickAsync()
+        {
+            var result = await Shell.Current.DisplayPromptAsync("Tax Percentage", "Enter the applicable tax percentage", placeholder: "10", initialValue: TaxPercentage.ToString());
+            if (!string.IsNullOrWhiteSpace(result))
+            {
+                if (!int.TryParse(result, out int enteredTaxPercentage))
+                {
+
+                    await Shell.Current.DisplayAlert("invalid value", "Entered tax percentage is invalid", "Ok");
+                    return;
+                }
+                //it was a valid numeric value
+                if (enteredTaxPercentage > 100||enteredTaxPercentage<0)
+                {
+                    await Shell.Current.DisplayAlert("invalid value", "Tax percentage has to be between 0 and 100", "Ok");
+                    return;
+                }
+                TaxPercentage = enteredTaxPercentage;
+            }
+        }
     }
 }
