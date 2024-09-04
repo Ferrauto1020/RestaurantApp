@@ -57,14 +57,14 @@ namespace RestaurantApp.ViewModels
         private void AddToCart(MenuItem menuItem)
         {
             var cartItem = CartItems.FirstOrDefault(c => c.ItemId == menuItem.Id);
-            if(cartItem==null)
+            if (cartItem == null)
             {
                 cartItem = new CartModel
                 {
                     ItemId = menuItem.Id,
                     Icon = menuItem.Icon,
                     Name = menuItem.Name,
-                    Price= menuItem.Price,
+                    Price = menuItem.Price,
                     Quantity = 1
                 };
                 CartItems.Add(cartItem);
@@ -76,5 +76,20 @@ namespace RestaurantApp.ViewModels
 
             }
         }
+
+        [RelayCommand]
+        private void IncreaseQuantity(CartModel cartItem) => cartItem.Quantity++;
+
+        [RelayCommand]
+        private void DecreaseQuantity(CartModel cartItem)
+        {
+            if (cartItem.Quantity > 0)
+                cartItem.Quantity--;
+            else
+                CartItems.Remove(cartItem);
+        }
+        [RelayCommand]
+        private void RemoveItemFromCart(CartModel cartItem) => CartItems.Remove(cartItem);
+
     }
 }

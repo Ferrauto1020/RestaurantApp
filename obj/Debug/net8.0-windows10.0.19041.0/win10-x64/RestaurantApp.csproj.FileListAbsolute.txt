@@ -1188,3 +1188,9 @@ F:\Giuseppe\lavori maui\github repo\RestaurantApp\bin\Debug\net8.0-windows10.0.1
 F:\Giuseppe\lavori maui\github repo\RestaurantApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Microsoft.UI.Xaml.Controls.pri
 F:\Giuseppe\lavori maui\github repo\RestaurantApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Microsoft.IO.RecyclableMemoryStream.dll
 F:\Giuseppe\lavori maui\RestaurantApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Microsoft.IO.RecyclableMemoryStream.dll
+F:\Giuseppe\lavori maui\RestaurantApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\minus.scale-100.png
+F:\Giuseppe\lavori maui\RestaurantApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\minus.scale-100.png
+F:\Giuseppe\lavori maui\RestaurantApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\plus.scale-100.png
+F:\Giuseppe\lavori maui\RestaurantApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\plus.scale-100.png
+F:\Giuseppe\lavori maui\RestaurantApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\x.scale-100.png
+F:\Giuseppe\lavori maui\RestaurantApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\x.scale-100.png
