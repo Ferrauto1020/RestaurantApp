@@ -269,14 +269,14 @@
                                Style="{StaticResource lbl}"/>
                         <Label Grid.Row="0"
                                Grid.Column="1"
-                               Text="2.99"
+                               Text="{Binding Subtotal, StringFormat='{0:C}'}"
                                HorizontalOptions="Center"/>
                         <HorizontalStackLayout Grid.Row="1"
                                                Spacing="5"
                                                Grid.Column="0">
                             <Label Text="Tax"
                                    VerticalOptions="Center"/>
-                            <Label Text="0%"
+                            <Label Text="{Binding TaxPercentage,StringFormat'{0}%'}"
                                    Padding="5,0"
                                    BackgroundColor="Wheat"
                                    VerticalOptions="Center"
@@ -284,7 +284,7 @@
                         </HorizontalStackLayout>
                         <Label Grid.Row="1"
                                Grid.Column="1"
-                               Text="2.99"
+                               Text="{Binding TaxAmount, StringFormat='{0:C}'}"
                                HorizontalOptions="Center"/>
                         <Border Grid.Row="2"
                                 Grid.ColumnSpan="2"
@@ -298,7 +298,7 @@
                                FontAttributes="Bold"/>
                         <Label Grid.Row="3"
                                Grid.Column="1"
-                               Text="2.99"
+                               Text="{Binding Total, StringFormat='{0:C}'}"
                                FontAttributes="Bold"
                                HorizontalOptions="Center"/>
 
