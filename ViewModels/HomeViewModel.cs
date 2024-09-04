@@ -83,9 +83,8 @@ namespace RestaurantApp.ViewModels
         [RelayCommand]
         private void DecreaseQuantity(CartModel cartItem)
         {
-            if (cartItem.Quantity > 0)
-                cartItem.Quantity--;
-            else
+            cartItem.Quantity--;
+            if (cartItem.Quantity == 0)
                 CartItems.Remove(cartItem);
         }
         [RelayCommand]
