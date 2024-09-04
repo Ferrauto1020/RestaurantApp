@@ -112,6 +112,14 @@ namespace RestaurantApp.ViewModels
         [RelayCommand]
         private void RemoveItemFromCart(CartModel cartItem) => CartItems.Remove(cartItem);
 
+        [RelayCommand]
+        private async Task ClearCartAsync()
+        {
+            if (await Shell.Current.DisplayAlert("Clear Cart?", "Do you really want to clear the cart?", "Yes", "No"))
+                CartItems.Clear();
+        }
+
+
         private void RecalculateAmounts()
         {
             Subtotal = CartItems.Sum(c => c.Amount);
@@ -130,7 +138,7 @@ namespace RestaurantApp.ViewModels
                     return;
                 }
                 //it was a valid numeric value
-                if (enteredTaxPercentage > 100||enteredTaxPercentage<0)
+                if (enteredTaxPercentage > 100 || enteredTaxPercentage < 0)
                 {
                     await Shell.Current.DisplayAlert("invalid value", "Tax percentage has to be between 0 and 100", "Ok");
                     return;

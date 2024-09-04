@@ -280,9 +280,7 @@
                                    Padding="5,0"
                                    BackgroundColor="Wheat"
                                    VerticalOptions="Center"
-                                   HorizontalOptions="Center"
-                                   
-                                   >
+                                   HorizontalOptions="Center">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding TaxPercentageClickCommand}"/>
                                 </Label.GestureRecognizers>
@@ -321,7 +319,10 @@
                                     Text="X"
                                     BackgroundColor="Red"
                                     MinimumHeightRequest="25"
-                                    MinimumWidthRequest="25"/>
+                                    MinimumWidthRequest="25"
+                                    Command="{Binding ClearCartCommand}"
+                                    ToolTipProperties.Text="Clear the cart"
+                                    />
 
                             <Button Grid.Column="2"
                                     Text="Pay Cash"
