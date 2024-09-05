@@ -1,8 +1,9 @@
+using CommunityToolkit.Mvvm.ComponentModel;
 using RestaurantApp.Data;
 
 namespace RestaurantApp.Models
 {
-    public class OrderModel
+    public partial class OrderModel : ObservableObject
     {
         public long Id { get; set; }
         public DateTime OrderDate { get; set; }
@@ -10,6 +11,9 @@ namespace RestaurantApp.Models
         public decimal TotalAmountPaid { get; set; }
         public string PaymentMode { get; set; }
 
-        public OrderItem[] Items{get;set;}
+        public OrderItem[] Items { get; set; }
+
+        [ObservableProperty]
+        private bool _isSelected;
     }
 }

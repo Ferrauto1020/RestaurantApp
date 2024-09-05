@@ -6,6 +6,7 @@
              xmlns:controls="clr-namespace:RestaurantApp.Controls"
              xmlns:data="clr-namespace:RestaurantApp.Data"
              xmlns:models="clr-namespace:RestaurantApp.Models"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="vm:OrderViewModel"
              Shell.NavBarIsVisible="False">
     <ContentPage.Resources>
@@ -69,9 +70,17 @@
                     <CollectionView Grid.Row="1"
                                     ItemsSource="{Binding Orders}">
                         <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="data:Order">
+                            <DataTemplate x:DataType="models:OrderModel">
                                 <Grid ColumnDefinitions="*,*,*,*,*,*"
-                                      RowDefinitions="2,Auto, Auto">
+                                      RowDefinitions="4,Auto, Auto">
+                                    <Grid.Triggers>
+                                        <DataTrigger TargetType="Grid"
+                                                     Binding="{Binding IsSelected}"
+                                                     Value="True">
+                                            <Setter Property="BackgroundColor"
+                                                    Value="{StaticResource LightWheat}"/>
+                                        </DataTrigger>
+                                    </Grid.Triggers>
                                     <Label Grid.Column="0"
                                            Grid.Row="1"
                                            Text="{Binding Id,StringFormat='#{0}'}"
@@ -118,6 +127,12 @@
                                              Grid.ColumnSpan="6"
                                              Color="LightGray"
                                              HeightRequest="1"/>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:OrderViewModel}}, Path=SelectOrderCommand}"
+                                            CommandParameter="{Binding .}"/>
+                                    </Grid.GestureRecognizers>
+
                                 </Grid>
 
                             </DataTemplate>
@@ -139,7 +154,7 @@
         </Grid>
         <Grid Grid.Column="1"
               BackgroundColor="{StaticResource LightWheat}"
-              RowDefinitions="Auto,Auto"
+              RowDefinitions="Auto,*"
               Padding="0,10">
             <Grid Grid.Row="0"
                   ColumnDefinitions="*,Auto">
@@ -151,7 +166,15 @@
                              Source="x.png"
                              HorizontalOptions="End"
                              VerticalOptions="Start"
-                             BackgroundColor="Red"/>
+                             BackgroundColor="Red"
+                             MinimumHeightRequest="30"
+                             MinimumWidthRequest="30"
+                             CornerRadius="5"
+                             Command="{Binding SelectOrderCommand}">
+                    <ImageButton.Shadow>
+                        <Shadow Brush="Red"/>
+                    </ImageButton.Shadow>
+                </ImageButton>
             </Grid>
             <ContentView Grid.Row="1"
                          BackgroundColor="Wheat"
@@ -159,7 +182,8 @@
                 <CollectionView ItemsSource="{Binding OrderItems}">
 
                     <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="2"/>
+                        <LinearItemsLayout Orientation="Vertical"
+                                           ItemSpacing="2"/>
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="data:OrderItem">
@@ -209,7 +233,35 @@
                             </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
+                    <CollectionView.EmptyView>
+                        <Grid RowDefinitions="*, Auto,*"
+                              MinimumHeightRequest="250">
+                            <VerticalStackLayout Grid.Row="1"
+                                                 Spacing="10">
+                                <Image Source="cylinder.png"
+                                       HeightRequest="60"
+                                       WidthRequest="60"
+                                       HorizontalOptions="Center">
+                                    <Image.Behaviors>
+                                        <toolkit:IconTintColorBehavior TintColor="Red"/>
+                                    </Image.Behaviors>
+                                </Image>
+                                <Label Text="No Order Selected"
+                                       FontAttributes="Bold"
+                                       FontSize="25"
+                                       HorizontalOptions="Center"
+                                       TextColor="Maroon"/>
+                                <Label Text="Select an order from the left section to view his items"
+                                       HorizontalOptions="Center"
+                                       HorizontalTextAlignment="Center"
+                                       FontSize="18"
+                                       FontAttributes="Bold"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </CollectionView.EmptyView>
                 </CollectionView>
+
+
             </ContentView>
         </Grid>
     </Grid>

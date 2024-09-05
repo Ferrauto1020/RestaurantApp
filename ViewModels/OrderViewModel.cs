@@ -14,7 +14,7 @@ namespace RestaurantApp.ViewModels
         {
             _databaseService = databaseService;
         }
-        public ObservableCollection<Order> Orders { get; set; } = [];
+        public ObservableCollection<OrderModel> Orders { get; set; } = [];
         public async Task<bool> PlaceOrderAsync(CartModel[] cartItems, bool isPaidOnline)
         {
             var orderItems = cartItems.Select(c => new OrderItem
@@ -42,6 +42,7 @@ namespace RestaurantApp.ViewModels
                 return false;
             }
             //operation was successfull
+            Orders.Add(orderModel); 
             return true;
         }
 
@@ -54,7 +55,15 @@ namespace RestaurantApp.ViewModels
                 return;
             _isInitialized = true;
             IsLoaded = true;
-            var orders = await _databaseService.GetOrdersAsync();
+            var dbOrders = await _databaseService.GetOrdersAsync();
+            var orders = dbOrders.Select(o => new OrderModel
+            {
+                Id = o.Id,
+                OrderDate = o.OrderDate,
+                PaymentMode = o.PaymentMode,
+                TotalAmountPaid = o.TotalAmountPaid,
+                TotalItemsCount = o.TotalItemsCount
+            });
             foreach (var order in orders)
             {
                 Orders.Add(order);
@@ -65,16 +74,28 @@ namespace RestaurantApp.ViewModels
         [ObservableProperty]
         private OrderItem[] _orderItems = [];
         [RelayCommand]
-        public async Task SelectOrderAsync(Order? order)
-        { 
-            if(order==null||order.Id == 0)
+        public async Task SelectOrderAsync(OrderModel? order)
+        {
+            var prevSelectedOrder = Orders.FirstOrDefault(o=>o.IsSelected);
+            if (prevSelectedOrder != null)
+            {
+                prevSelectedOrder.IsSelected = false;
+                if(prevSelectedOrder.Id == order?.Id)
+                {
+                    OrderItems = [];
+                    return;
+                }
+            }
+
+            if (order == null || order.Id == 0)
             {
                 OrderItems = [];
                 return;
             }
-            IsLoaded=true;
+            IsLoaded = true;
+            order.IsSelected = true;
             OrderItems = await _databaseService.GetOrderItemsAsync(order.Id);
-            IsLoaded=false;
+            IsLoaded = false;
         }
     }
 }
