@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RestaurantApp.Controls.SaveMenuItemFormControl"
              xmlns:model="clr-namespace:RestaurantApp.Models"
+             xmlns:control="clr-namespace:RestaurantApp.Controls"
              x:Name="this">
     <ContentView.Resources>
 
@@ -39,7 +40,9 @@
                         HorizontalOptions="Center"
                         VerticalOptions="Center"
                         StrokeThickness="0">
-                    <Image Source="image_add.png"
+                    <Image
+                        x:Name="itemIcon"
+                         Source="image_add.png"
                            WidthRequest="36"
                            HeightRequest="36"
                            Aspect="AspectFit"/>
@@ -48,7 +51,9 @@
                         HorizontalOptions="Center"
                         BackgroundColor="DarkOliveGreen"
                         MinimumHeightRequest="30"
-                        Margin="0,5,0,0"/>
+                        Margin="0,5,0,0"
+                        Clicked="PickImageButton_Clicked"
+                        />
             </VerticalStackLayout>
             <VerticalStackLayout Spacing="5">
                 <Label Text="Price"
@@ -72,26 +77,41 @@
                 <CollectionView ItemsSource="{Binding Item.Categories}">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Vertical"
-                                Span="3"
-                                VerticalItemSpacing="3" HorizontalItemSpacing="3"
-                                />
+                                         Span="3"
+                                         VerticalItemSpacing="3"
+                                HorizontalItemSpacing="3"/>
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
 
                         <DataTemplate x:DataType="model:MenuCategoryModel">
-                            <Border BackgroundColor="Wheat" StrokeShape="RoundRectangle 10" HeightRequest="40" >
-                                <Label Text="{Binding Name}" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Border BackgroundColor="Wheat"
+                                    StrokeShape="RoundRectangle 10"
+                                    HeightRequest="40">
+                                <Label Text="{Binding Name}"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center">
                                     <Label.Triggers>
-                                        <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
-                                            <Setter Property="TextColor" Value="White"/>
+                                        <DataTrigger TargetType="Label"
+                                                Binding="{Binding IsSelected}"
+                                                Value="True">
+                                            <Setter Property="TextColor"
+                                                    Value="White"/>
                                         </DataTrigger>
                                     </Label.Triggers>
                                 </Label>
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="Maroon"/>
-                                </DataTrigger>
-                            </Border.Triggers>
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border"
+                                            Binding="{Binding IsSelected}"
+                                            Value="True">
+                                        <Setter Property="BackgroundColor"
+                                                Value="Maroon"/>
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type control:SaveMenuItemFormControl}},Path=TogglecategorySelectionCommand}"
+                                        CommandParameter="{Binding .}"
+                                        ></TapGestureRecognizer>
+                                </Border.GestureRecognizers>
                             </Border>
 
                         </DataTemplate>
@@ -104,7 +124,9 @@
                 <Button Grid.Column="0 "
                         HorizontalOptions="Start"
                         Text="Cancel"
-                        BackgroundColor="Red"/>
+                        BackgroundColor="Red"
+                        Command="{Binding CancelCommand}"
+                        />
                 <Button Grid.Column="1 "
                         Text="Save"
                         BackgroundColor="DarkOliveGreen"/>

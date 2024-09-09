@@ -38,7 +38,25 @@ namespace RestaurantApp.ViewModels
             Categories[0].IsSelected = true;
             SelectedCategory = Categories[0];
             MenuItems = await _databaseService.GetMenuItemsByCategoryAsync(SelectedCategory.Id);
+            SetEmptyCategoriesToItem();
             IsLoading = false;
+
+        }
+
+        private void SetEmptyCategoriesToItem()
+        {
+            MenuItem.Categories.Clear();
+            foreach (var category in Categories)
+            {
+                var categoryOfItem = new MenuCategoryModel
+                {
+                    Id = category.Id,
+                    Icon = category.Icon,
+                    Name = category.Name,
+                    IsSelected = false
+                };
+                MenuItem.Categories.Add(categoryOfItem);
+            }
         }
 
 
@@ -85,7 +103,14 @@ namespace RestaurantApp.ViewModels
                     categoryOfItem.IsSelected = false;
                 menuItemModel.Categories.Add(categoryOfItem);
             }
-            MenuItem =menuItemModel;
+            MenuItem = menuItemModel;
+
+        }
+        [RelayCommand]
+        private void Cancel()
+        {
+            MenuItem = new();
+            SetEmptyCategoriesToItem();
         }
     }
 }
