@@ -26,6 +26,7 @@
             <Grid Grid.Row="2">
 
                 <controls:MenuItemsListControl  Items="{Binding MenuItems}"
+                    IsEditCase="True"
                                                 OnSelectItem="MenuItemsListControl_OnSelectItem"/>
 
                 <BoxView IsVisible="{Binding IsLoading}"
@@ -56,7 +57,7 @@
             <Grid Grid.Row="1"
                   Padding="10"
                   BackgroundColor="{StaticResource LightWheat}">
-                  <controls:SaveMenuItemFormControl Item="{Binding MenuItem}" OnCancel="SaveMenuItemFormControl_OnCancel"/>
+                  <controls:SaveMenuItemFormControl Item="{Binding MenuItem}"  OnCancel="SaveMenuItemFormControl_OnCancel" OnSaveItem="SaveMenuItemFormControl_OnSaveItem"/>
             </Grid>
         </Grid>
     </Grid>

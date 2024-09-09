@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RestaurantApp.Data;
@@ -110,7 +111,25 @@ namespace RestaurantApp.ViewModels
         private void Cancel()
         {
             MenuItem = new();
+
             SetEmptyCategoriesToItem();
+        }
+        [RelayCommand]
+        private async Task SaveItemMenuAsync(MenuItemModel model)
+        {
+            IsLoading = true;
+            var errorMessage = await _databaseService.SaveMenuItemAsync(model);
+            if (errorMessage != null)
+            {
+                await Shell.Current.DisplayAlert("Error", errorMessage, "ok");
+            }
+            else
+            {
+                //await Toast.Make("Menu Item Saved").Show();
+                Cancel();
+            }
+            //save item in the db
+            IsLoading = false;
         }
     }
 }

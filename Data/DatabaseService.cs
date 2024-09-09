@@ -1,3 +1,4 @@
+using System.Data.Common;
 using RestaurantApp.Models;
 using SQLite;
 
@@ -93,9 +94,9 @@ namespace RestaurantApp.Data
 
         public async Task<OrderItem[]> GetOrderItemsAsync(long? orderId) => await _connection.Table<OrderItem>().Where(oi => oi.OrderId == orderId).ToArrayAsync();
 
-public async Task<MenuCategory[]>GetCategoriesOfMenuItem(int menuItemId)
-{
-    var query = @"
+        public async Task<MenuCategory[]> GetCategoriesOfMenuItem(int menuItemId)
+        {
+            var query = @"
     SELECT cat.* 
     FROM MenuCategory cat
     INNER JOIN
@@ -103,9 +104,86 @@ public async Task<MenuCategory[]>GetCategoriesOfMenuItem(int menuItemId)
     ON cat.Id = map.MenuCategoryId
     WHERE map.MenuItemId = ?
     ";
-    var categories = await _connection.QueryAsync<MenuCategory>(query,menuItemId);
-    return [.. categories];
-}
+            var categories = await _connection.QueryAsync<MenuCategory>(query, menuItemId);
+            return [.. categories];
+        }
+
+
+        public async Task<string?> SaveMenuItemAsync(MenuItemModel model)
+        {
+            if (model.Id == 0)
+            {
+                //creating a new item
+                MenuItem menuItem = new()
+                {
+                    Name = model.Name,
+                    Description = model.Description,
+                    Icon = model.Icon,
+                    Price = model.Price
+                };
+                if (await _connection.InsertAsync(menuItem) > 0)
+                {
+                    var categoryMapping = model
+                    .SelectedCategories
+                    .Select(c => new MenuItemCategoryMapping
+                    {
+                        Id = c.Id,
+                        MenuCategoryId = c.Id,
+                        MenuItemId = menuItem.Id
+                    });
+                    if (await _connection.InsertAllAsync(categoryMapping) > 0)
+                    {
+                        model.Id = menuItem.Id;
+                        return null;
+                    }
+                    else
+                    {
+                        //something went wrong
+                        await _connection.DeleteAsync(menuItem);
+                    }
+                }
+                return "error in saving menu item";
+            }
+            else
+            {
+                //updtaing an item
+                string? errorMessage = null;
+
+                await _connection.RunInTransactionAsync(db =>
+                {
+                    var menuItem = db.Find<MenuItem>(model.Id);
+                    menuItem.Name = model.Name;
+                    menuItem.Description = model.Description;
+                    menuItem.Icon = model.Icon;
+                    menuItem.Price = model.Price;
+                    if (db.Update(menuItem) == 0)
+                    {
+                        //operation failed 
+                        errorMessage = "Error in life choice";
+                        throw new Exception();
+                    }
+                    var deleteQuery = @"
+                    DELETE FROM MenuItemCategoryMapping
+                    WHERE MenuItemId = ?
+                    ";
+                    db.Execute(deleteQuery, menuItem.Id);
+                    var categoryMapping = model.SelectedCategories
+                    .Select(c => new MenuItemCategoryMapping
+                    {
+                        Id = c.Id,
+                        MenuCategoryId = c.Id,
+                        MenuItemId = menuItem.Id
+                    });
+                    if (db.InsertAll(categoryMapping) == 0)
+                    {
+                        errorMessage = "Error in life choice ";
+                        //operation failed we'll get them next time
+                        throw new Exception();
+                    }
+                });
+                return errorMessage;
+            }
+        }
 
         public async ValueTask DisposeAsync()
         {

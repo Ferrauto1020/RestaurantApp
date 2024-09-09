@@ -1,11 +1,14 @@
 using CommunityToolkit.Mvvm.Input;
 using RestaurantApp.Data;
 using RestaurantApp.Models;
+using Windows.UI.Notifications;
 
 namespace RestaurantApp.Controls;
 
 public partial class SaveMenuItemFormControl : ContentView
 {
+	
+	private const string DefaultIcon = "image_add.png";
 	public SaveMenuItemFormControl()
 	{
 		InitializeComponent();
@@ -23,22 +26,18 @@ public partial class SaveMenuItemFormControl : ContentView
 			{
 				if (menuItemModel.Id > 0)
 				{
-					/* thisControl.itemIcon.Source = menuItemModel.Icon;
-					thisControl.itemIcon.HeightRequest = thisControl.itemIcon.WidthRequest = 100;
-				 */
 					thisControl.SetIconImage(false, menuItemModel.Icon, thisControl);
+					thisControl.ExistingIcon = menuItemModel.Icon;
 				}
 				else
-				{/* 
-					thisControl.itemIcon.Source = "image_add.png";
-					thisControl.itemIcon.HeightRequest = thisControl.itemIcon.WidthRequest = 36;
-				 */
+				{
 					thisControl.SetIconImage(true, null, thisControl);
 				}
 			}
 		}
-	}
 
+	}
+	public string? ExistingIcon { get; set; }
 	public MenuItemModel Item
 	{
 		get => (MenuItemModel)GetValue(ItemProperty);
@@ -64,10 +63,18 @@ public partial class SaveMenuItemFormControl : ContentView
 			using var fs = new FileStream(localPath, FileMode.Create, FileAccess.Write);
 			await imageStream.CopyToAsync(fs);
 			SetIconImage(isDefault: false, localPath);
+			Item.Icon = localPath;
 		}
 		else
 		{
-			SetIconImage(isDefault: true);
+			if (ExistingIcon != null)
+			{
+				SetIconImage(isDefault: false, ExistingIcon);
+			}
+			else
+			{
+				SetIconImage(isDefault: true);
+			}
 		}
 	}
 	public void SetIconImage(bool isDefault, string? iconSource = null, SaveMenuItemFormControl? control = null)
@@ -75,11 +82,39 @@ public partial class SaveMenuItemFormControl : ContentView
 		int size = 100;
 		if (isDefault)
 		{
-			iconSource = "image_add.png";
+			iconSource = DefaultIcon;
 			size = 36;
 		}
 		control = control ?? this;
 		control.itemIcon.Source = iconSource;
 		control.itemIcon.HeightRequest = control.itemIcon.WidthRequest = size;
+	}
+
+public event Action<MenuItemModel>?OnSaveItem;
+
+	[RelayCommand]
+	private async Task SaveMenuItemAsync()
+	{
+		if (string.IsNullOrWhiteSpace(Item.Name) || string.IsNullOrWhiteSpace(Item.Description))
+		{
+			await ErrorAllertAsync("Item name and description are mandatory");
+			return;
+		}
+		if (Item.SelectedCategories.Length==0)
+		{
+			await ErrorAllertAsync("Please select at least 1 category");
+			return;
+		}
+
+		if (Item.Icon == DefaultIcon)
+		{
+			await ErrorAllertAsync("Icon image is Mandatory");
+			return;
+		}
+
+		OnSaveItem?.Invoke(Item);
+		static async Task ErrorAllertAsync(string message) =>
+		await Shell.Current.DisplayAlert("Validation error", message, "OK");
+
 	}
 }

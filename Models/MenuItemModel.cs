@@ -19,5 +19,7 @@ namespace RestaurantApp.Models
         private string _description;
 
         public ObservableCollection<MenuCategoryModel> Categories { get; set; } = [];
+    
+    public MenuCategoryModel[] SelectedCategories => Categories.Where(c=>c.IsSelected).ToArray();
     }
 }
