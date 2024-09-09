@@ -46,6 +46,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = RestaurantApp.Controls.Men
 build_metadata.AdditionalFiles.TargetPath = Controls\MenuItemsListControl.xaml
 build_metadata.AdditionalFiles.RelativePath = Controls\MenuItemsListControl.xaml
 
+[F:/Giuseppe/lavori maui/RestaurantApp/Controls/SaveMenuItemFormControl.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = RestaurantApp.Controls.SaveMenuItemFormControl.xaml
+build_metadata.AdditionalFiles.TargetPath = Controls\SaveMenuItemFormControl.xaml
+build_metadata.AdditionalFiles.RelativePath = Controls\SaveMenuItemFormControl.xaml
+
 [F:/Giuseppe/lavori maui/RestaurantApp/Pages/MainPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = RestaurantApp.Pages.MainPage.xaml

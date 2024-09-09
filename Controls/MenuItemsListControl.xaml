@@ -42,7 +42,7 @@
                                    FontSize="25"
                                    FontAttributes="Bold"
                                    TextColor="Maroon"/>
-                            <ImageButton Source="shopping.png"
+                            <ImageButton Source="{Binding Source={x:Reference this},Path=ActionIcon}"
                                          BackgroundColor="{StaticResource LightWheat}"
                                          CornerRadius="8"
                                          HeightRequest="25"

@@ -1196,3 +1196,7 @@ F:\Giuseppe\lavori maui\RestaurantApp\obj\Debug\net8.0-windows10.0.19041.0\win10
 F:\Giuseppe\lavori maui\RestaurantApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\qualifiers.txt
 F:\Giuseppe\lavori maui\RestaurantApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\qualifiers.txt.intermediate
 F:\Giuseppe\lavori maui\RestaurantApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\MultipleQualifiersPerDimensionFound.txt
+F:\Giuseppe\lavori maui\RestaurantApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\edit.scale-100.png
+F:\Giuseppe\lavori maui\RestaurantApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\edit.scale-100.png
+F:\Giuseppe\lavori maui\RestaurantApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\image_add.scale-100.png
+F:\Giuseppe\lavori maui\RestaurantApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\image_add.scale-100.png

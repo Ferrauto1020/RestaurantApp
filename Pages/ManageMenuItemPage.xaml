@@ -7,8 +7,7 @@
              xmlns:controls="clr-namespace:RestaurantApp.Controls"
              x:Class="RestaurantApp.Pages.ManageMenuItemPage"
              Shell.NavBarIsVisible="False"
-             x:DataType="vm:ManageMenuItemsViewModel"
-             >
+             x:DataType="vm:ManageMenuItemsViewModel">
 
     <Grid ColumnDefinitions=".75*,.25*">
         <Grid Grid.Column="0"
@@ -56,8 +55,8 @@
             </VerticalStackLayout>
             <Grid Grid.Row="1"
                   Padding="10"
-                  BackgroundColor="Wheat">
-                <!-- save Menu item form -->
+                  BackgroundColor="{StaticResource LightWheat}">
+                  <controls:SaveMenuItemFormControl/>
             </Grid>
         </Grid>
     </Grid>

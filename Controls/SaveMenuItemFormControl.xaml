@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RestaurantApp.Controls.SaveMenuItemFormControl">
+    <ContentView.Resources>
+
+        <ResourceDictionary>
+            <Style TargetType="Entry"
+                   x:Key="txt">
+                <Setter Property="BackgroundColor"
+                        Value="Wheat"/>
+                <Setter Property="PlaceholderColor"
+                        Value="Black"/>
+            </Style>
+            <Style TargetType="Label"
+                   x:Key="lbl">
+                <Setter Property="FontSize"
+                        Value="16"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ScrollView>
+        <VerticalStackLayout Spacing="10">
+            <VerticalStackLayout Spacing="2">
+                <Label Text="Name"
+                       Style="{StaticResource lbl}"/>
+                <Entry Placeholder="Enter name"
+                       Style="{StaticResource txt}"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout Spacing="2">
+                <Label Text="Image/Icon"
+                       Style="{StaticResource lbl}"/>
+                <Border BackgroundColor="Wheat"
+                        HeightRequest="100"
+                        WidthRequest="100"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        StrokeThickness="0">
+                    <Image Source="image_add.png"
+                           WidthRequest="36"
+                           HeightRequest="36"
+                           Aspect="AspectFit"/>
+                </Border>
+                <Button Text="Pick Image"
+                        HorizontalOptions="Center"
+                        BackgroundColor="DarkOliveGreen"
+                        MinimumHeightRequest="30"
+                        Margin="0,5,0,0"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout Spacing="5">
+                <Label Text="Price"
+                       Style="{StaticResource lbl}"/>
+                <Entry Placeholder="Enter price"
+                       Style="{StaticResource txt}"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout Spacing="5">
+                <Label Text="Description"
+                       Style="{StaticResource lbl}"/>
+                <Editor Placeholder="Enter description"
+                        Style="{StaticResource txt}"
+                        MinimumHeightRequest="100"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="5">
+                <Label Text="Categories"
+                       Style="{StaticResource lbl}"/>
+                <!-- Categories collection view -->
+            </VerticalStackLayout> 
+            <Grid ColumnDefinitions="*,*">
+                <Button Grid.Column="0 " HorizontalOptions="Start" Text="Cancel" BackgroundColor="Red"/>
+                <Button Grid.Column="1 " Text="Save" BackgroundColor="DarkOliveGreen"/>
+            
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentView>
