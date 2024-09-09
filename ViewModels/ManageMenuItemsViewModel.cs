@@ -25,6 +25,8 @@ namespace RestaurantApp.ViewModels
 
         [ObservableProperty]
         private bool _isLoading;
+        [ObservableProperty]
+        private MenuItemModel _menuItem = new();
         private bool _isInitialized;
         public async ValueTask InitializeAsync()
         {
@@ -59,7 +61,31 @@ namespace RestaurantApp.ViewModels
         [RelayCommand]
         private async Task EditMenuItemAsync(MenuItem menuItem)
         {
-            await Shell.Current.DisplayAlert("Edit","Edit menu item","ok");
+            // await Shell.Current.DisplayAlert("Edit","Edit menu item","ok");
+            var menuItemModel = new MenuItemModel
+            {
+                Description = menuItem.Description,
+                Icon = menuItem.Icon,
+                Name = menuItem.Name,
+                Id = menuItem.Id,
+                Price = menuItem.Price
+            };
+            var itemCategories = await _databaseService.GetCategoriesOfMenuItem(menuItem.Id);
+            foreach (var category in Categories)
+            {
+                var categoryOfItem = new MenuCategoryModel
+                {
+                    Icon = category.Icon,
+                    Id = category.Id,
+                    Name = category.Name
+                };
+                if (itemCategories.Any(c => c.Id == category.Id))
+                    categoryOfItem.IsSelected = true;
+                else
+                    categoryOfItem.IsSelected = false;
+                menuItemModel.Categories.Add(categoryOfItem);
+            }
+            MenuItem =menuItemModel;
         }
     }
 }
