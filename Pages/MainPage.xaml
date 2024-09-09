@@ -31,110 +31,12 @@
                    FontAttributes="Bold"/>
 
             <controls:CategoriesListControl Grid.Row="1"
-                    Categories="{Binding Categories}"
-                    OnCategorySelected="CategoriesListControl_OnCategorySelected"/>
+                                            Categories="{Binding Categories}"
+                                            OnCategorySelected="CategoriesListControl_OnCategorySelected"/>
 
-            <!--       <CollectionView Grid.Row="1"
-                            ItemsSource="{Binding Categories}">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Horizontal"
-                                       ItemSpacing="10"/>
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:MenuCategoryModel">
-                        <Border Padding="20,10"
-                                BackgroundColor="{StaticResource LightWheat}"
-                                StrokeShape="RoundRectangle 10"
-                                StrokeThickness="0">
-                            <HorizontalStackLayout Spacing="5">
-                                <Image Source="{Binding Icon}"
-                                       HeightRequest="20"
-                                       WidthRequest="20"
-                                       VerticalOptions="Center"/>
-                                <Label Text="{Binding Name}"
-                                       TextColor="Maroon"
-                                       VerticalOptions="Center">
-                                    <Label.Triggers>
-                                        <DataTrigger TargetType="Label"
-                                                     Binding="{Binding IsSelected}"
-                                                     Value="True">
-                                            <Setter Property="TextColor"
-                                                    Value="White"/>
-                                        </DataTrigger>
-                                    </Label.Triggers>
-                                </Label>
-                            </HorizontalStackLayout>
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border"
-                                             Binding="{Binding IsSelected}"
-                                             Value="True">
-                                    <Setter Property="BackgroundColor"
-                                            Value="Maroon"/>
-
-                                </DataTrigger>
-                            </Border.Triggers>
-                            <Border.GestureRecognizers>
-
-                                <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}},Path=SelectCategoryCommand}"
-                                                      CommandParameter="{Binding Id}"/>
-                            </Border.GestureRecognizers>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
- -->
             <Grid Grid.Row="2">
-                <CollectionView ItemsSource="{Binding MenuItems}">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical"
-                                         Span="4"
-                                         HorizontalItemSpacing="10"
-                                         VerticalItemSpacing="10"/>
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="data:MenuItem">
-                            <Border Padding="10"
-                                    StrokeShape="RoundRectangle 10"
-                                    Stroke="#DDD">
-                                <VerticalStackLayout Spacing="10">
-                                    <Border BackgroundColor="{StaticResource LightWheat}"
-                                            HeightRequest="150"
-                                            StrokeThickness="0">
-                                        <Image Source="{Binding Icon}"
-                                               WidthRequest="250"
-                                               MaximumHeightRequest="150"
-                                               HorizontalOptions="Center"
-                                               VerticalOptions="Center"
-                                               Aspect="Center"/>
-                                    </Border>
-                                    <Label Text="{Binding Name}"
-                                           FontAttributes="Bold"
-                                           FontSize="20"/>
-                                    <Label Text="{Binding Description}"
-                                           FontSize="12"
-                                           TextColor="Gray"/>
-                                    <FlexLayout JustifyContent="SpaceBetween">
-                                        <Label Text="{Binding Price,StringFormat='{0:C}'}"
-                                               FontSize="25"
-                                               FontAttributes="Bold"
-                                               TextColor="Maroon"/>
-                                        <ImageButton Source="shopping.png"
-                                                     BackgroundColor="{StaticResource LightWheat}"
-                                                     CornerRadius="8"
-                                                     HeightRequest="25"
-                                                     WidthRequest="25"
-                                                     Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}},Path=AddToCartCommand}"
-                                                     CommandParameter="{Binding .}"/>
-                                    </FlexLayout>
-                                </VerticalStackLayout>
-                                <Border.GestureRecognizers>
-                                    <TapGestureRecognizer   Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}},Path=AddToCartCommand}"
-                                                            CommandParameter="{Binding .}"/>
-                                </Border.GestureRecognizers>
-                            </Border>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+
+                <controls:MenuItemsListControl  Items="{Binding MenuItems}" OnSelectItem="MenuItemsListControl_OnSelectItem"/>
 
                 <BoxView IsVisible="{Binding IsLoading}"
                          HorizontalOptions="Fill"

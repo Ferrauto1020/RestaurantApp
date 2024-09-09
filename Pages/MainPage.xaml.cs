@@ -1,5 +1,5 @@
 ﻿using RestaurantApp.ViewModels;
-
+using MenuItem = RestaurantApp.Data.MenuItem; 
 namespace RestaurantApp.Pages;
 
 public partial class MainPage : ContentPage
@@ -22,5 +22,11 @@ public partial class MainPage : ContentPage
 	{
 		await _homeViewModel.SelectCategoryCommand.ExecuteAsync(category.Id);
 	}
+
+	private void MenuItemsListControl_OnSelectItem(MenuItem menuItem)
+	{
+		_homeViewModel.AddToCartCommand.Execute(menuItem);
+	}
+
 }
 
