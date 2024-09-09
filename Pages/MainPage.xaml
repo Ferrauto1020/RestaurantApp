@@ -29,7 +29,12 @@
                    Text="Hello"
                    FontSize="22"
                    FontAttributes="Bold"/>
-            <CollectionView Grid.Row="1"
+
+            <controls:CategoriesListControl Grid.Row="1"
+                    Categories="{Binding Categories}"
+                    OnCategorySelected="CategoriesListControl_OnCategorySelected"/>
+
+            <!--       <CollectionView Grid.Row="1"
                             ItemsSource="{Binding Categories}">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Horizontal"
@@ -77,7 +82,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
+ -->
             <Grid Grid.Row="2">
                 <CollectionView ItemsSource="{Binding MenuItems}">
                     <CollectionView.ItemsLayout>

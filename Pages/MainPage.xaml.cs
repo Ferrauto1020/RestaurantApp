@@ -4,7 +4,7 @@ namespace RestaurantApp.Pages;
 
 public partial class MainPage : ContentPage
 {
-private readonly HomeViewModel _homeViewModel;
+	private readonly HomeViewModel _homeViewModel;
 	public MainPage(
 		HomeViewModel homeViewModel
 		)
@@ -18,6 +18,9 @@ private readonly HomeViewModel _homeViewModel;
 	{
 		await _homeViewModel.InitializeAsync();
 	}
-
+	private async void CategoriesListControl_OnCategorySelected(Models.MenuCategoryModel category)
+	{
+		await _homeViewModel.SelectCategoryCommand.ExecuteAsync(category.Id);
+	}
 }
 

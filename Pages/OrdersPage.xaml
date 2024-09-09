@@ -187,6 +187,7 @@
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="data:OrderItem">
+
                             <Border Padding="5"
                                     StrokeShape="RoundRectangle 10"
                                     BackgroundColor="{StaticResource LightWheat}">
