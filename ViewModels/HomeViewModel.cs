@@ -12,7 +12,7 @@ namespace RestaurantApp.ViewModels
     {
         private readonly DatabaseService _databaseService;
         private readonly OrderViewModel _orderViewModel;
-
+        private readonly SettingsViewModel _settingsViewModel;
         [ObservableProperty]
         private MenuCategoryModel[] _categories = [];
         [ObservableProperty]
@@ -31,17 +31,15 @@ namespace RestaurantApp.ViewModels
         public decimal Total => Subtotal + TaxAmount;
         [ObservableProperty]
         private string _name = "Guest";
-        public HomeViewModel(DatabaseService databaseService, OrderViewModel orderViewModel)
+        public HomeViewModel(DatabaseService databaseService, OrderViewModel orderViewModel, SettingsViewModel settingsViewModel)
         {
             _databaseService = databaseService;
             _orderViewModel = orderViewModel;
+            _settingsViewModel = settingsViewModel;
             CartItems.CollectionChanged += CartItems_CollectionChanged;
             WeakReferenceMessenger.Default.Register<MenuItemChangedMessage>(this);
-            WeakReferenceMessenger.Default.Register<NameChangedMessage>(this,(recipient,message)=>
-            {
-                Name = message.Value;
-            }
-            );
+            WeakReferenceMessenger.Default.Register<NameChangedMessage>(this, (recipient, message) => Name = message.Value);
+         TaxPercentage = _settingsViewModel.GetTaxPercentage();
         }
 
         private void CartItems_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -156,6 +154,7 @@ namespace RestaurantApp.ViewModels
                     return;
                 }
                 TaxPercentage = enteredTaxPercentage;
+                _settingsViewModel.SetTaxPercentage(enteredTaxPercentage);
             }
         }
 

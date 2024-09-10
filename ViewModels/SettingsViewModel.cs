@@ -6,6 +6,7 @@ namespace RestaurantApp.ViewModels
     public class SettingsViewModel
     {
         private const string NameKey = "name";
+        private const string TaxPercentageKey = "";
         private bool _isInitialized;
 
         public async ValueTask InitializeAsync()
@@ -26,7 +27,11 @@ namespace RestaurantApp.ViewModels
                 Preferences.Default.Set<string>(NameKey, name);
             }
             WeakReferenceMessenger.Default.Send(NameChangedMessage.From(name));
-            
+
         }
+
+
+        public int GetTaxPercentage() => Preferences.Default.Get<int>(TaxPercentageKey, 0);
+        public void SetTaxPercentage(int taxPercentage) => Preferences.Default.Set<int>(TaxPercentageKey, taxPercentage);
     }
 }
