@@ -29,12 +29,19 @@ namespace RestaurantApp.ViewModels
         private int _taxPercentage;
         public decimal TaxAmount => (Subtotal * TaxPercentage) / 100;
         public decimal Total => Subtotal + TaxAmount;
+        [ObservableProperty]
+        private string _name = "Guest";
         public HomeViewModel(DatabaseService databaseService, OrderViewModel orderViewModel)
         {
             _databaseService = databaseService;
             _orderViewModel = orderViewModel;
             CartItems.CollectionChanged += CartItems_CollectionChanged;
             WeakReferenceMessenger.Default.Register<MenuItemChangedMessage>(this);
+            WeakReferenceMessenger.Default.Register<NameChangedMessage>(this,(recipient,message)=>
+            {
+                Name = message.Value;
+            }
+            );
         }
 
         private void CartItems_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -199,13 +206,13 @@ namespace RestaurantApp.ViewModels
                 };
                 MenuItems = [.. MenuItems, newMenuItem];
             }
-//check if the updated item is in the cart
+            //check if the updated item is in the cart
             var cartItem = CartItems.FirstOrDefault(c => c.ItemId == model.Id);
-            if(cartItem != null)
+            if (cartItem != null)
             {
                 cartItem.Price = model.Price;
-                cartItem.Name= model.Name;
-                cartItem.Icon=model.Icon;
+                cartItem.Name = model.Name;
+                cartItem.Icon = model.Icon;
 
                 var itemIndex = CartItems.IndexOf(cartItem);
                 CartItems[itemIndex] = cartItem;

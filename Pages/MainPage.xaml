@@ -26,7 +26,7 @@
               RowSpacing="15"
               Padding="15">
             <Label Grid.Row="0"
-                   Text="Hello"
+                   Text="{Binding Name,StringFormat='Hello, {0}'}"
                    FontSize="22"
                    FontAttributes="Bold"/>
 
