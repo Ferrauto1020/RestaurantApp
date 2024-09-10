@@ -2,12 +2,13 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using RestaurantApp.Data;
 using RestaurantApp.Models;
 using MenuItem = RestaurantApp.Data.MenuItem;
 namespace RestaurantApp.ViewModels
 {
-    public partial class HomeViewModel : ObservableObject
+    public partial class HomeViewModel : ObservableObject, IRecipient<MenuItemChangedMessage>
     {
         private readonly DatabaseService _databaseService;
         private readonly OrderViewModel _orderViewModel;
@@ -33,6 +34,7 @@ namespace RestaurantApp.ViewModels
             _databaseService = databaseService;
             _orderViewModel = orderViewModel;
             CartItems.CollectionChanged += CartItems_CollectionChanged;
+            WeakReferenceMessenger.Default.Register<MenuItemChangedMessage>(this);
         }
 
         private void CartItems_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -159,6 +161,45 @@ namespace RestaurantApp.ViewModels
                 CartItems.Clear();
             }
             IsLoading = false;
+        }
+
+        public void Receive(MenuItemChangedMessage message)
+        {
+            var model = message.Value;
+                 var menuItem = MenuItems.FirstOrDefault(m => m.Id == model.Id);
+            if (menuItem != null)
+            {
+                //this menu item is not on the screen rn
+
+                //check if the items still has a mapping to selected category
+                if (!model.SelectedCategories.Any(c => c.Id == SelectedCategory.Id))
+                {
+                    //remove item from the current  UI category
+                    MenuItems = [.. MenuItems.Where(m => m.Id != model.Id)];
+                    return;
+                }
+
+                //update the details
+                menuItem.Price = model.Price;
+                menuItem.Description = model.Description;
+                menuItem.Name = model.Name;
+                menuItem.Icon = model.Icon;
+                MenuItems = [.. MenuItems];
+            }
+            else if(model.SelectedCategories.Any(c=>c.Id==SelectedCategory.Id))
+            {
+                //refresh the UI for display the item 
+                var newMenuItem= new MenuItem
+                {
+                    Id= model.Id,
+                    Description = model.Description,
+                    Icon=model.Icon,
+                    Name=model.Name,
+                    Price = model.Price,
+                };
+                MenuItems = [..MenuItems,newMenuItem];
+            }
+       
         }
     }
 

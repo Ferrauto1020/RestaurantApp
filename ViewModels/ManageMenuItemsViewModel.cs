@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using RestaurantApp.Data;
 using RestaurantApp.Models;
 using MenuItem = RestaurantApp.Data.MenuItem;
@@ -125,11 +126,50 @@ namespace RestaurantApp.ViewModels
             }
             else
             {
+                HandleMenuItemChanged(model);
+                //send the updated item details to the other part of the app
+                WeakReferenceMessenger.Default.Send(MenuItemChangedMessage.From(model));
                 //await Toast.Make("Menu Item Saved").Show();
                 Cancel();
             }
             //save item in the db
             IsLoading = false;
+        }
+        private void HandleMenuItemChanged(MenuItemModel model)
+        {
+            var menuItem = MenuItems.FirstOrDefault(m => m.Id == model.Id);
+            if (menuItem != null)
+            {
+                //this menu item is not on the screen rn
+
+                //check if the items still has a mapping to selected category
+                if (!model.SelectedCategories.Any(c => c.Id == SelectedCategory.Id))
+                {
+                    //remove item from the current  UI category
+                    MenuItems = [.. MenuItems.Where(m => m.Id != model.Id)];
+                    return;
+                }
+
+                //update the details
+                menuItem.Price = model.Price;
+                menuItem.Description = model.Description;
+                menuItem.Name = model.Name;
+                menuItem.Icon = model.Icon;
+                MenuItems = [.. MenuItems];
+            }
+            else if(model.SelectedCategories.Any(c=>c.Id==SelectedCategory.Id))
+            {
+                //refresh the UI for display the item 
+                var newMenuItem= new MenuItem
+                {
+                    Id= model.Id,
+                    Description = model.Description,
+                    Icon=model.Icon,
+                    Name=model.Name,
+                    Price = model.Price,
+                };
+                MenuItems = [..MenuItems,newMenuItem];
+            }
         }
     }
 }
