@@ -36,7 +36,7 @@
     <Grid ColumnDefinitions=".75*, .25*">
         <Grid Grid.Column="0"
               BackgroundColor="White"
-              RowDefinitions="Auto,Auto,*"
+              RowDefinitions="Auto,Auto"
               RowSpacing="15"
               Padding="15">
             <Label Grid.Row="0"
@@ -68,13 +68,15 @@
                                Text=""
                                Style="{StaticResource th}"/>
                     </Grid>
-                    <CollectionView Grid.Row="1"
-                                    ItemsSource="{Binding Orders}">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="models:OrderModel">
-                                <ScrollView>
+                 <ScrollView Grid.Row="1" HeightRequest="600" >
+                        <CollectionView  
+                            ItemsSource="{Binding Orders}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:OrderModel">
+
+
                                     <Grid ColumnDefinitions="*,*,*,*,*,*"
-                                          RowDefinitions="4,Auto, Auto">
+                                          RowDefinitions="4,Auto,Auto">
 
                                         <Grid.Triggers>
                                             <DataTrigger TargetType="Grid"
@@ -84,8 +86,8 @@
                                                         Value="{StaticResource LightWheat}"/>
                                             </DataTrigger>
                                         </Grid.Triggers>
-                                        
-                                        
+
+
                                         <Label Grid.Column="0"
                                                Grid.Row="1"
                                                Text="{Binding Id,StringFormat='#{0}'}"
@@ -132,8 +134,8 @@
                                                  Grid.ColumnSpan="6"
                                                  Color="LightGray"
                                                  HeightRequest="1"/>
-                                        
-                                        
+
+
                                         <Grid.GestureRecognizers>
                                             <TapGestureRecognizer
                                                 Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:OrderViewModel}}, Path=SelectOrderCommand}"
@@ -142,10 +144,10 @@
 
                                     </Grid>
 
-                                    </ScrollView>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+               </ScrollView>
                 </Grid>
                 <BoxView IsVisible="{Binding IsLoaded}"
                          HorizontalOptions="Fill"
