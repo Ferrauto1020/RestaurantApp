@@ -36,6 +36,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = RestaurantApp.Controls.Cur
 build_metadata.AdditionalFiles.TargetPath = Controls\CurrentDateTimeControl.xaml
 build_metadata.AdditionalFiles.RelativePath = Controls\CurrentDateTimeControl.xaml
 
+[F:/Giuseppe/lavori maui/RestaurantApp/Controls/HelpPopup.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = RestaurantApp.Controls.HelpPopup.xaml
+build_metadata.AdditionalFiles.TargetPath = Controls\HelpPopup.xaml
+build_metadata.AdditionalFiles.RelativePath = Controls\HelpPopup.xaml
+
 [F:/Giuseppe/lavori maui/RestaurantApp/Controls/MenuItemsListControl.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = RestaurantApp.Controls.MenuItemsListControl.xaml

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:controls="clr-namespace:RestaurantApp.Controls"
+               x:Class="RestaurantApp.Controls.HelpPopup"
+               x:Name="this"
+               CanBeDismissedByTappingOutsideOfPopup="False">
+    <Border BackgroundColor="Wheat" StrokeShape="RoundRectangle 10" Stroke="Maroon">
+      <Border.Shadow>
+        <Shadow /> 
+      </Border.Shadow>
+      
+        <VerticalStackLayout>
+            <Grid ColumnDefinitions="*,Auto"
+                  BackgroundColor="Maroon"
+                  Padding="15,8">
+                <Label Grid.Column="0"
+                       Text="Need help?"
+                       TextColor="White"
+                       FontSize="18"/>
+                <Label Grid.Column="1"
+                       Text="X"
+                       BackgroundColor="Red"
+                       HeightRequest="25"
+                       WidthRequest="25"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       TextColor="White"
+                       FontAttributes="Bold"
+                       FontSize="18">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="CloseLabel_Tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+
+            </Grid>
+            <VerticalStackLayout Spacing="10"
+                                 Padding="15">
+                <Image Source="help.png"
+                       HeightRequest="25"
+                       HorizontalOptions="Center"
+                       WidthRequest="25"/>
+                <Label Text="You can connect with us"
+                       FontSize="16"
+                       HorizontalOptions="Center"/>
+                <HorizontalStackLayout Spacing="5">
+                    <Label Text="Email us at"
+                           VerticalOptions="Center"
+                           FontSize="16"/>
+                    <Label Text="{x:Static controls:HelpPopup.Email}"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"
+                           TextDecorations="Underline"/>
+                    <Label Text="Copy to clipboard"
+                        x:Name="copyEmailLabel"
+                           VerticalOptions="Center"
+                           Padding="8,2"
+                           BackgroundColor="yellow">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="CopyEmail_Tapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="5">
+
+                    <Label Text="Call us at"
+                           VerticalOptions="Center"
+                           FontSize="16"/>
+                    <Label Text="{x:Static controls:HelpPopup.Phone}"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"
+                           TextDecorations="Underline"/>
+
+                    <Label Text="Copy to clipboard"
+                        x:Name="copyPhoneLabel"
+                           VerticalOptions="Center"
+                           Padding="8,2"
+                           BackgroundColor="yellow">
+
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="CopyPhone_Tapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+            <Grid ColumnDefinitions="Auto,*"
+                  BackgroundColor="Maroon"
+                  Padding="15,5">
+                <Label Grid.Column="0"
+                       Text="Designed  &amp; Developed by:?"
+                       TextColor="White"
+                       FontSize="14"
+                       VerticalOptions="Center"/>
+                <Label Grid.Column="1"
+                       Text="Giuseppe Ferrauto"
+                       TextColor="White"
+                       FontSize="15"
+                       VerticalOptions="Center"
+                       TextDecorations="Underline"/>
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Footer_Tapped"/>
+                </Grid.GestureRecognizers>
+            </Grid>
+
+        </VerticalStackLayout>
+    </Border>
+</toolkit:Popup>
