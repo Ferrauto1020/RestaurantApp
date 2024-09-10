@@ -41,6 +41,7 @@ namespace RestaurantApp.ViewModels
                 await Shell.Current.DisplayAlert("Error", errorMessage, "Ok");
                 return false;
             }
+            await Toast.Make("Order send").Show();
             //operation was successfull
             Orders.Add(orderModel); 
             return true;

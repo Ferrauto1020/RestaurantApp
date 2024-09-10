@@ -24,7 +24,8 @@
         <Grid Grid.Column="0"
               RowDefinitions="Auto,Auto,*"
               RowSpacing="15"
-              Padding="15">
+              Padding="15"
+              >
             <Label Grid.Row="0"
                    Text="{Binding Name,StringFormat='Hello, {0}'}"
                    FontSize="22"
@@ -32,6 +33,7 @@
 
             <controls:CategoriesListControl Grid.Row="1"
                                             Categories="{Binding Categories}"
+                                            MaximumHeightRequest="40"
                                             OnCategorySelected="CategoriesListControl_OnCategorySelected"/>
 
             <Grid Grid.Row="2">

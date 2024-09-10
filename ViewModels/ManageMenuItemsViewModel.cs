@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -129,7 +130,7 @@ namespace RestaurantApp.ViewModels
                 HandleMenuItemChanged(model);
                 //send the updated item details to the other part of the app
                 WeakReferenceMessenger.Default.Send(MenuItemChangedMessage.From(model));
-                //await Toast.Make("Menu Item Saved").Show();
+                await Toast.Make("Menu Item Saved").Show();
                 Cancel();
             }
             //save item in the db
@@ -157,18 +158,18 @@ namespace RestaurantApp.ViewModels
                 menuItem.Icon = model.Icon;
                 MenuItems = [.. MenuItems];
             }
-            else if(model.SelectedCategories.Any(c=>c.Id==SelectedCategory.Id))
+            else if (model.SelectedCategories.Any(c => c.Id == SelectedCategory.Id))
             {
                 //refresh the UI for display the item 
-                var newMenuItem= new MenuItem
+                var newMenuItem = new MenuItem
                 {
-                    Id= model.Id,
+                    Id = model.Id,
                     Description = model.Description,
-                    Icon=model.Icon,
-                    Name=model.Name,
+                    Icon = model.Icon,
+                    Name = model.Name,
                     Price = model.Price,
                 };
-                MenuItems = [..MenuItems,newMenuItem];
+                MenuItems = [.. MenuItems, newMenuItem];
             }
         }
     }

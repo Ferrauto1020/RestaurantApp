@@ -13,7 +13,8 @@
         <Grid Grid.Column="0"
               RowDefinitions="Auto,Auto,*"
               RowSpacing="15"
-              Padding="15">
+              Padding="15"
+              BackgroundColor="White">
             <Label Grid.Row="0"
                    Text="Manage Menu Items"
                    FontSize="22"

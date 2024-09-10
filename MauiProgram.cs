@@ -13,14 +13,17 @@ public static class MauiProgram
 	{
 		var builder = MauiApp.CreateBuilder();
 		builder
-		
+
 			.UseMauiApp<App>()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("Poppins-Regular.ttf", "PoppinsRegular");
 				fonts.AddFont("Poppins-Semibold.ttf", "PoppinsSemibold");
 			})
-			.UseMauiCommunityToolkit()
+			.UseMauiCommunityToolkit(options =>
+  {
+	  options.SetShouldEnableSnackbarOnWindows(true);
+  })
 			;
 
 #if DEBUG
@@ -36,6 +39,6 @@ public static class MauiProgram
 		builder.Services.AddTransient<ManageMenuItemsViewModel>();
 		builder.Services.AddSingleton<SettingsViewModel>();
 		return builder.Build();
-		
+
 	}
 }
