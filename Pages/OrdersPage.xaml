@@ -68,7 +68,7 @@
                                Text=""
                                Style="{StaticResource th}"/>
                     </Grid>
-                 <ScrollView Grid.Row="1" HeightRequest="600" >
+                 <ScrollView Grid.Row="1" HeightRequest="630" >
                         <CollectionView  
                             ItemsSource="{Binding Orders}">
                             <CollectionView.ItemTemplate>
