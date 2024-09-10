@@ -166,7 +166,7 @@ namespace RestaurantApp.ViewModels
         public void Receive(MenuItemChangedMessage message)
         {
             var model = message.Value;
-                 var menuItem = MenuItems.FirstOrDefault(m => m.Id == model.Id);
+            var menuItem = MenuItems.FirstOrDefault(m => m.Id == model.Id);
             if (menuItem != null)
             {
                 //this menu item is not on the screen rn
@@ -186,20 +186,30 @@ namespace RestaurantApp.ViewModels
                 menuItem.Icon = model.Icon;
                 MenuItems = [.. MenuItems];
             }
-            else if(model.SelectedCategories.Any(c=>c.Id==SelectedCategory.Id))
+            else if (model.SelectedCategories.Any(c => c.Id == SelectedCategory.Id))
             {
                 //refresh the UI for display the item 
-                var newMenuItem= new MenuItem
+                var newMenuItem = new MenuItem
                 {
-                    Id= model.Id,
+                    Id = model.Id,
                     Description = model.Description,
-                    Icon=model.Icon,
-                    Name=model.Name,
+                    Icon = model.Icon,
+                    Name = model.Name,
                     Price = model.Price,
                 };
-                MenuItems = [..MenuItems,newMenuItem];
+                MenuItems = [.. MenuItems, newMenuItem];
             }
-       
+//check if the updated item is in the cart
+            var cartItem = CartItems.FirstOrDefault(c => c.ItemId == model.Id);
+            if(cartItem != null)
+            {
+                cartItem.Price = model.Price;
+                cartItem.Name= model.Name;
+                cartItem.Icon=model.Icon;
+
+                var itemIndex = CartItems.IndexOf(cartItem);
+                CartItems[itemIndex] = cartItem;
+            }
         }
     }
 
