@@ -18,6 +18,7 @@ namespace RestaurantApp.ViewModels
         {
             _databaseService = databaseService;
         }
+//for set default icon
 
         [ObservableProperty]
         private MenuCategoryModel[] _categories = [];

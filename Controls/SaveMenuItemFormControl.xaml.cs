@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RestaurantApp.Data;
 using RestaurantApp.Models;
+using RestaurantApp.ViewModels;
 
 namespace RestaurantApp.Controls;
 
@@ -12,6 +13,7 @@ public partial class SaveMenuItemFormControl : ContentView
 	public SaveMenuItemFormControl()
 	{
 		InitializeComponent();
+
 	}
 
 
@@ -20,10 +22,12 @@ public partial class SaveMenuItemFormControl : ContentView
 
 	private static void OnItemChanged(BindableObject bindable, object oldValue, object newValue)
 	{
+		
 		if (newValue is MenuItemModel menuItemModel)
 		{
 			if (bindable is SaveMenuItemFormControl thisControl)
 			{
+				thisControl.ExistingIcon = null;
 				if (menuItemModel.Id > 0)
 				{
 					thisControl.SetIconImage(false, menuItemModel.Icon, thisControl);
@@ -37,12 +41,15 @@ public partial class SaveMenuItemFormControl : ContentView
 		}
 
 	}
+
 	public string? ExistingIcon { get; set; }
 	public MenuItemModel Item
 	{
 		get => (MenuItemModel)GetValue(ItemProperty);
 		set => SetValue(ItemProperty, value);
 	}
+
+
 	[RelayCommand]
 	private void TogglecategorySelection(MenuCategoryModel category) =>
 	category.IsSelected = !category.IsSelected;
@@ -90,7 +97,7 @@ public partial class SaveMenuItemFormControl : ContentView
 		control.itemIcon.HeightRequest = control.itemIcon.WidthRequest = size;
 	}
 
-public event Action<MenuItemModel>?OnSaveItem;
+	public event Action<MenuItemModel>? OnSaveItem;
 
 	[RelayCommand]
 	private async Task SaveMenuItemAsync()
@@ -100,7 +107,7 @@ public event Action<MenuItemModel>?OnSaveItem;
 			await ErrorAllertAsync("Item name and description are mandatory");
 			return;
 		}
-		if (Item.SelectedCategories.Length==0)
+		if (Item.SelectedCategories.Length == 0)
 		{
 			await ErrorAllertAsync("Please select at least 1 category");
 			return;
